@@ -1,10 +1,6 @@
-﻿using System.Globalization;
-using System.Net;
-using Diia.Challenge.DAL;
+﻿using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Diia.Challenge.Controllers
 {
@@ -15,11 +11,14 @@ namespace Diia.Challenge.Controllers
         private readonly ILogger<MainController> _logger;
         private readonly ApplicationDataReader _dataReader;
         private readonly ConfigurationDataReaderJson _configurationReader;
+        private AddressValidator _addressValidator;
 
         public MainController(ILogger<MainController> logger,
                                 ApplicationDataReader dataReader,
-                                ConfigurationDataReaderJson configurationReader)
+                                ConfigurationDataReaderJson configurationReader,
+                                AddressValidator addressValidator)
         {
+            _addressValidator = addressValidator;
             _configurationReader = configurationReader;
             _dataReader = dataReader;
             _logger = logger;
@@ -38,6 +37,11 @@ namespace Diia.Challenge.Controllers
 
             _dataReader.AddApplication(application);
 
+            if (!_configurationReader.CheckAddress(address))
+            {
+                _addressValidator.CheckOnApplicationAdded(address);
+            }
+
             return application.Id;
         }
 
@@ -50,12 +54,14 @@ namespace Diia.Challenge.Controllers
         [HttpPost("threshold")]
         public void SetTreshhold(Threshold threshold)
         {
+            _addressValidator.UnvalidateOnConfigurationChange();
             _configurationReader.SetThreshold(threshold);
         }
 
         [HttpPost("weights")]
         public void SetWeights(Weights weights)
         {
+            _addressValidator.UnvalidateOnConfigurationChange();
             _configurationReader.SetWeights(weights);
         }
     }

@@ -12,8 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationContext, ApplicationContext>( options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
-builder.Services.AddScoped<ApplicationDataReader, ApplicationDataReaderSql>();
-builder.Services.AddScoped<ConfigurationDataReaderJson, ConfigurationDataReaderJson>();
+builder.Services.AddSingleton<ApplicationDataReader, ApplicationDataReaderSql>();
+builder.Services.AddSingleton<ConfigurationDataReaderJson, ConfigurationDataReaderJson>();
+builder.Services.AddSingleton<AddressValidator, AddressValidator>();
 
 
 var app = builder.Build();

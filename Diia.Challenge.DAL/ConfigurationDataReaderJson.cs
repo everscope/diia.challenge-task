@@ -56,5 +56,27 @@ namespace Diia.Challenge.DAL
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
             return JsonSerializer.Deserialize<Addresses>(readOnlyTemp);
         }
+
+        public bool CheckAddress(Address address)
+        { 
+            Addresses addresses = GetAddresses();
+            return addresses.addresses.Contains(address) ? true : false;
+        }
+
+        public void RemoveAddresses(List<Address> addressesToDelete)
+        {
+            byte[] jsonBytesToRead = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json");
+            var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
+            Addresses addresses = JsonSerializer.Deserialize<Addresses>(readOnlyTemp);
+
+            foreach (Address address in addressesToDelete)
+            {
+                addresses.addresses.Remove(address);
+
+            }
+
+            byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<Addresses>(addresses);
+            File.WriteAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json", jsonBytesToWrite);
+        }
     }
 }
