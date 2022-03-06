@@ -26,9 +26,15 @@ namespace Diia.Challenge
             _context.SaveChanges();
         }
 
-        public override void UpdateApplicationStatus()
+        public override void UpdateApplicationStatus(string Id, string status)
         {
-
+            var application = _context.Applications.FirstOrDefault(p => p.Id == Id);
+            if (application != null)
+            {
+                application.Status = status;
+                _context.Applications.Update(application);
+                _context.SaveChanges();
+            }
         }
 
     }

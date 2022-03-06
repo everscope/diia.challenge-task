@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Net;
 using Diia.Challenge.Lib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,9 +37,9 @@ namespace Diia.Challenge.Controllers
         }
 
         [HttpPost("application/{id}")]
-        public string ChangeAplicationStatus(int id)
+        public void ChangeAplicationStatus([FromRoute] string id, Status status)
         {
-            return id.ToString();
+            _dataReader.UpdateApplicationStatus(id, status.status);
         }
 
         [HttpPost("threshold")]

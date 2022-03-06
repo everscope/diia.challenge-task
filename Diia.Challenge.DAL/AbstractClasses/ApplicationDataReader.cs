@@ -18,7 +18,7 @@ namespace Diia.Challenge
 
         public abstract void GetApplicationData();
         public abstract void AddApplication(Application application);
-        public abstract void UpdateApplicationStatus();
+        public abstract void UpdateApplicationStatus(string Id, string status);
 
         public string GenerateId()
         {
