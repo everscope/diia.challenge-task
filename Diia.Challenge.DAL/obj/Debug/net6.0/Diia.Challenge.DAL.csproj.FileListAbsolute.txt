@@ -1,0 +1,17 @@
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Diia.Challenge.DAL.deps.json
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Diia.Challenge.DAL.runtimeconfig.json
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Diia.Challenge.DAL.dll
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Diia.Challenge.DAL.pdb
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Diia.Challenge.Lib.dll
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Diia.Challenge.Lib.pdb
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.csproj.AssemblyReference.cache
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.GeneratedMSBuildEditorConfig.editorconfig
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.AssemblyInfoInputs.cache
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.AssemblyInfo.cs
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.csproj.CoreCompileInputs.cache
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.csproj.CopyComplete
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.dll
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\refint\Diia.Challenge.DAL.dll
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.pdb
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.genruntimeconfig.cache
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\ref\Diia.Challenge.DAL.dll

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diia.Challenge", "Diia.Challenge\Diia.Challenge.csproj", "{CD390185-D16D-4D1C-B379-42CE0D517E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diia.Challenge", "Diia.Challenge\Diia.Challenge.csproj", "{CD390185-D16D-4D1C-B379-42CE0D517E9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diia.Challenge.DAL", "Diia.Challenge.DAL\Diia.Challenge.DAL.csproj", "{0F5CCF9D-7F5E-4507-B6FE-D7B1C61897DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diia.Challenge.Lib", "Diia.Challenge.Lib\Diia.Challenge.Lib.csproj", "{046A800B-C28A-48D7-B0BC-154EBBAAD4D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{CD390185-D16D-4D1C-B379-42CE0D517E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD390185-D16D-4D1C-B379-42CE0D517E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD390185-D16D-4D1C-B379-42CE0D517E9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F5CCF9D-7F5E-4507-B6FE-D7B1C61897DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F5CCF9D-7F5E-4507-B6FE-D7B1C61897DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F5CCF9D-7F5E-4507-B6FE-D7B1C61897DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F5CCF9D-7F5E-4507-B6FE-D7B1C61897DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{046A800B-C28A-48D7-B0BC-154EBBAAD4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{046A800B-C28A-48D7-B0BC-154EBBAAD4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{046A800B-C28A-48D7-B0BC-154EBBAAD4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{046A800B-C28A-48D7-B0BC-154EBBAAD4D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

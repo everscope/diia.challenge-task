@@ -1,0 +1,34 @@
+{
+  "Cities": [
+    {
+      "id": "string"
+    },
+    {
+      "id": "Kyiv"
+    }
+  ],
+
+  "City districts": [
+    {
+      "id": "string",
+      "parentId": "cityId"
+    },
+    {
+      "id": "Lesnoy",
+      "parentId": "Kyiv"
+    }
+  ],
+
+  "Streets" : [
+    {
+      "id": "string",
+      "parentId": "cityId",
+      "cityDistrictId": "string"
+    },
+    {
+      "id": "Tsentral",
+      "parentId": "Kyiv",
+      "cityDistrictId": "Lesnoy"
+    }
+  ]
+}
