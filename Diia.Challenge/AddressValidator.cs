@@ -8,7 +8,7 @@ namespace Diia.Challenge
         private ApplicationContext _context;
         private ConfigurationDataReaderJson _configurationReader;
         public Dictionary<string, int> Weights { get; set; }
-        public int Threshold { get; set; }
+        public int? Threshold { get; set; } = null;
 
         public AddressValidator(ApplicationContext context,
             ConfigurationDataReaderJson configurationReader)
