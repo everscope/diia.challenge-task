@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diia.Challenge.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220306171825_modified_2")]
-    partial class modified_2
+    [Migration("20220306211243_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,14 @@ namespace Diia.Challenge.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Diia.Challenge.Lib.Address", b =>
+            modelBuilder.Entity("Diia.Challenge.Lib.AddressForSql", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("CityDistrictId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -36,6 +42,8 @@ namespace Diia.Challenge.DAL.Migrations
                     b.Property<string>("StreetId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Addresses");
                 });
