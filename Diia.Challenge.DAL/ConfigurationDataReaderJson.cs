@@ -41,41 +41,98 @@ namespace Diia.Challenge.DAL
         {
             byte[] jsonBytesToRead = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json");
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
-            Addresses addresses = JsonSerializer.Deserialize<Addresses>(readOnlyTemp);
+            AddressJson addresses = JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
 
-            addresses.addresses.Add(address);
+            if (!addresses.Cities.Any(p => p.id == address.CityId))
+            {
+                addresses.Cities.Add(new CityJson() {id = address.CityId} );
+            }
+            
+            if(!addresses.CityDistricts.Any(p => p.id == address.CityDistrictId 
+                                        && p.parentId == address.CityId))
+            {
+                addresses.CityDistricts.Add(new DistrictJson()
+                {
+                    id = address.CityDistrictId,
+                    parentId = address.CityId
+                });
+            }
 
-            byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<Addresses>(addresses);
+            if (!addresses.Streets.Any(p => p.id == address.StreetId
+                                            && p.parentId == address.CityId
+                                            && p.cityDistrictId == address.CityDistrictId))
+            {
+                addresses.Streets.Add(new StreetJson()
+                {
+                    id = address.StreetId,
+                    parentId = address.CityId,
+                    cityDistrictId = address.CityDistrictId
+                });
+            }
+
+            byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<AddressJson>(addresses);
             File.WriteAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json", jsonBytesToWrite);
 
         }
 
-        public Addresses GetAddresses()
+        public AddressJson GetAddresses()
         {
             byte[] jsonBytesToRead = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json");
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
-            return JsonSerializer.Deserialize<Addresses>(readOnlyTemp);
+            return JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
         }
 
         public bool CheckAddress(Address address)
         { 
-            Addresses addresses = GetAddresses();
-            return addresses.addresses.Contains(address) ? true : false;
+            AddressJson addresses = GetAddresses();
+
+            bool result;
+
+            if (addresses != null && addresses.Streets.Any(p => p.id == address.StreetId
+                                                && p.parentId == address.CityId
+                                                && p.cityDistrictId == address.CityDistrictId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
-        public void RemoveAddresses(List<Address> addressesToDelete)
+        public void RemoveAddresses(List<AddressForSql> addressesToDelete)
         {
             byte[] jsonBytesToRead = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json");
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
-            Addresses addresses = JsonSerializer.Deserialize<Addresses>(readOnlyTemp);
+            AddressJson addresses = JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
 
-            foreach (Address address in addressesToDelete)
+            foreach (AddressForSql address in addressesToDelete)
             {
-                addresses.addresses.Remove(address);
+                var StreetToDelete = addresses.Streets.Where(p => p.id == address.StreetId
+                                                  && p.parentId == address.CityId
+                                                  && p.cityDistrictId == address.CityDistrictId);
+                foreach (StreetJson street in StreetToDelete)
+                {
+                    addresses.Streets.Remove(street);
+                }
+
+                var districtsToDelete = addresses.CityDistricts.Where(p => p.id == address.CityDistrictId
+                                                && p.parentId == address.CityId);
+                foreach (DistrictJson district in districtsToDelete)
+                {
+                    addresses.CityDistricts.Remove(district);
+                }
+
+                var citiesToDelete = addresses.Cities.Where(p => p.id == address.CityId).ToList();
+                foreach (CityJson city in citiesToDelete)
+                {
+                    addresses.Cities.Remove(city);
+                }
 
             }
 
-            byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<Addresses>(addresses);
+            byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<AddressJson>(addresses);
             File.WriteAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json", jsonBytesToWrite);
         }
     }

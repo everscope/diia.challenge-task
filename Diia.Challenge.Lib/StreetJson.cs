@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Diia.Challenge.Lib
 {
-    public class Address
+    public class StreetJson
     {
-        public string CityId { get; set; }
-        public string CityDistrictId { get; set; }
-        public string StreetId { get; set; }
-
+        public string id { get; set; }
+        public string parentId { get; set; }
+        public string cityDistrictId { get; set; }
     }
 }

@@ -15,11 +15,6 @@ namespace Diia.Challenge
             _context = context;
         }
 
-        public override void GetApplicationData()
-        {
-
-        }
-
         public override void AddApplication(Application application)
         {
             _context.Applications.Add(application);

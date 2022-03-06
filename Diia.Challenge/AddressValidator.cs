@@ -24,6 +24,17 @@ namespace Diia.Challenge
 
         public void CheckOnApplicationAdded(Address address)
         {
+
+            if (Threshold == null)
+            {
+                Threshold = _configurationReader.GetThreshold().value;
+            }
+
+            if (Weights == null)
+            {
+                Weights = _configurationReader.GetWeights().weigths;
+            }
+
             var previousApplications = _context.Applications.Where(p => p.City == address.CityId
                                                             && p.District == address.CityDistrictId
                                                             && p.Street == address.StreetId);
@@ -31,12 +42,20 @@ namespace Diia.Challenge
             int x = 1;
             foreach (Application application in previousApplications)
             {
-                x *= Weights[application.Status];
+                if (application.Status != "-1")
+                {
+                    x *= Weights[application.Status];
+                }
             }
 
             if (x > Threshold)
             {
-                _context.Addresses.Add(address);
+                _context.Addresses.Add(new AddressForSql()
+                {
+                    CityDistrictId = address.CityDistrictId,
+                    CityId = address.CityId,
+                    StreetId = address.StreetId
+                });
                 _context.SaveChanges();
             }
             

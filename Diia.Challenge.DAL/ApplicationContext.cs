@@ -13,11 +13,11 @@ namespace Diia.Challenge.DAL
         }
 
         public DbSet<Application> Applications { get; set; }
-        public DbSet<Address> Addresses { get; set; }
+        public DbSet<AddressForSql> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Address>().HasNoKey();
+            //modelBuilder.Entity<Address>().HasNoKey();
         }
 
     }

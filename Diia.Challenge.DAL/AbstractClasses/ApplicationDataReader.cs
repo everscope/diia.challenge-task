@@ -16,7 +16,6 @@ namespace Diia.Challenge
         //    _context = context;
         //}
 
-        public abstract void GetApplicationData();
         public abstract void AddApplication(Application application);
         public abstract void UpdateApplicationStatus(string Id, string status);
 

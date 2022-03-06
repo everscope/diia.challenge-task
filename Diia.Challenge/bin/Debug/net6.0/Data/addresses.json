@@ -8,7 +8,7 @@
     }
   ],
 
-  "City districts": [
+  "CityDistricts": [
     {
       "id": "string",
       "parentId": "cityId"

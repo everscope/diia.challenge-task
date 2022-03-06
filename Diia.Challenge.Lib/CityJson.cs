@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Diia.Challenge.Lib
 {
-    //public class Addresses
-    //{
-    //    public List<Address> addresses { get; set; }
-    //}
+    public class CityJson
+    {
+        public string id { get; set; }
+    }
 }

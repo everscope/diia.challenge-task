@@ -12,9 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationContext, ApplicationContext>( options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
-builder.Services.AddSingleton<ApplicationDataReader, ApplicationDataReaderSql>();
-builder.Services.AddSingleton<ConfigurationDataReaderJson, ConfigurationDataReaderJson>();
-builder.Services.AddSingleton<AddressValidator, AddressValidator>();
+builder.Services.AddTransient<ApplicationDataReader, ApplicationDataReaderSql>();
+builder.Services.AddTransient<ConfigurationDataReaderJson, ConfigurationDataReaderJson>();
+builder.Services.AddTransient<AddressValidator, AddressValidator>();
 
 
 var app = builder.Build();

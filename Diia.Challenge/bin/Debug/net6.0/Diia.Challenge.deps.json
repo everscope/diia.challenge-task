@@ -550,6 +550,9 @@
         }
       },
       "Diia.Challenge.Lib/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.2"
+        },
         "runtime": {
           "Diia.Challenge.Lib.dll": {}
         }
