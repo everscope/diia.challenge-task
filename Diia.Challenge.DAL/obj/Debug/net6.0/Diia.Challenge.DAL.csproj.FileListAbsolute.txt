@@ -15,3 +15,6 @@ F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\ref
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.pdb
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\Diia.Challenge.DAL.genruntimeconfig.cache
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\obj\Debug\net6.0\ref\Diia.Challenge.DAL.dll
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Data\addresses.json
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Data\threshhold.json
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.DAL\bin\Debug\net6.0\Data\weights.json

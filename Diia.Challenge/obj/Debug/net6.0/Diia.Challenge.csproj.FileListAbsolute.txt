@@ -26,7 +26,6 @@ F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\obj\Debug\net6.0\Diia.Ch
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\obj\Debug\net6.0\Diia.Challenge.genruntimeconfig.cache
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\obj\Debug\net6.0\ref\Diia.Challenge.dll
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Data\addresses.json
-F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Data\treshhold.json
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Data\weights.json
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Humanizer.dll
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
@@ -66,3 +65,4 @@ F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Diia.Ch
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Diia.Challenge.Lib.dll
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Diia.Challenge.DAL.pdb
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Diia.Challenge.Lib.pdb
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge\bin\Debug\net6.0\Data\threshhold.json

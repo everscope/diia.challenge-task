@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Net;
+using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,13 @@ namespace Diia.Challenge.Controllers
     {
         private readonly ILogger<MainController> _logger;
         private readonly ApplicationDataReader _dataReader;
+        private readonly ConfigurationDataReaderJson _configurationReader;
 
-        public MainController(ILogger<MainController> logger, ApplicationDataReader dataReader)
+        public MainController(ILogger<MainController> logger,
+                                ApplicationDataReader dataReader,
+                                ConfigurationDataReaderJson configurationReader)
         {
+            _configurationReader = configurationReader;
             _dataReader = dataReader;
             _logger = logger;
         }
@@ -43,15 +48,15 @@ namespace Diia.Challenge.Controllers
         }
 
         [HttpPost("threshold")]
-        public string SetTreshhold(int threshold)
+        public void SetTreshhold(Threshold threshold)
         {
-            return "threshold";
+            _configurationReader.SetThreshold(threshold);
         }
 
         [HttpPost("weights")]
-        public string SetWeights()
+        public void SetWeights(Weights weights)
         {
-            return "weights";
+            _configurationReader.SetWeights(weights);
         }
     }
 }
