@@ -37,9 +37,10 @@ namespace Diia.Challenge.Controllers
 
             _dataReader.AddApplication(application);
 
-            if (!_configurationReader.CheckAddress(address))
+            if (!_configurationReader.CheckAddress(address)
+                && _addressValidator.CheckOnApplicationAdded(address))
             {
-                _addressValidator.CheckOnApplicationAdded(address);
+                _configurationReader.AddAddress(address);
             }
 
             return application.Id;

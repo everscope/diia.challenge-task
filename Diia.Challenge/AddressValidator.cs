@@ -22,7 +22,7 @@ namespace Diia.Challenge
             _configurationReader.RemoveAddresses(_context.Addresses.ToList());
         }
 
-        public void CheckOnApplicationAdded(Address address)
+        public bool CheckOnApplicationAdded(Address address)
         {
 
             if (Threshold == null)
@@ -57,6 +57,11 @@ namespace Diia.Challenge
                     StreetId = address.StreetId
                 });
                 _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
             }
             
         }
