@@ -8,20 +8,17 @@ namespace Diia.Challenge.Controllers
     [Route("api/")]
     public class MainController : ControllerBase
     {
-        private readonly ILogger<MainController> _logger;
         private readonly ApplicationDataReader _dataReader;
         private readonly ConfigurationDataReaderJson _configurationReader;
         private AddressValidator _addressValidator;
 
-        public MainController(ILogger<MainController> logger,
-                                ApplicationDataReader dataReader,
+        public MainController(ApplicationDataReader dataReader,
                                 ConfigurationDataReaderJson configurationReader,
                                 AddressValidator addressValidator)
         {
             _addressValidator = addressValidator;
             _configurationReader = configurationReader;
             _dataReader = dataReader;
-            _logger = logger;
         }
 
         [HttpPost("application")]

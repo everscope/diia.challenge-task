@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="Moq" Version="4.17.2" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Diia.Challenge.DAL\Diia.Challenge.DAL.csproj" />
+    <ProjectReference Include="..\Diia.Challenge.Lib\Diia.Challenge.Lib.csproj" />
+    <ProjectReference Include="..\Diia.Challenge\Diia.Challenge.csproj" />
+  </ItemGroup>
+
+</Project>
