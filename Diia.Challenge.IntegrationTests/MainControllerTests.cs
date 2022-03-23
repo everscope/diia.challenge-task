@@ -1,49 +1,71 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 using Castle.Core.Logging;
 using Diia.Challenge.Controllers;
 using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Moq;
 
 namespace Diia.Challenge.IntegrationTests
 {
-    public class MainControllerTests
+    public class MainControllerTests : IClassFixture<TestingWebApplicationFactory<Program>>
     {
-        //[Fact]
-        //public void AddApplication_ShouldAddNewApplicationToDatabaseThatAlreadyExistsWithoudAddingToDictionary()
-        //{
-        //    var context = new Mock<ApplicationContext>();
-        //    var configurationDataReaderJsonMoq = new Mock<ConfigurationDataReaderJson>();
-        //    var addressValidatorMoq = new Mock<AddressValidator>();
-        //    var applicationContextReader = new Mock<ApplicationDataReaderSql>(context);
+        private readonly HttpClient _client;
+        private readonly ApplicationContext _context;
 
-        //    //configurationDataReaderJsonMoq.Setup(p => p.CheckAddress(It.IsAny<Address>())).Returns(true);
-        //    //addressValidatorMoq.Setup(p => p.CheckOnApplicationAdded(It.IsAny<Address>())); 
-        //    //applicationContextReader.Setup(p => p.AddApplication(It.IsAny<Application>()));
+        public MainControllerTests(TestingWebApplicationFactory<Program> factory)
+        {
+            _client = factory.CreateClient();
+            DbContextOptionsBuilder<ApplicationContext> optionsBuilder =
+                new DbContextOptionsBuilder<ApplicationContext>();
+            optionsBuilder.UseInMemoryDatabase("ApplicationContextForTesting");
+            _context = new ApplicationContext(optionsBuilder.Options);
+        }
 
-        //    configurationDataReaderJsonMoq.Setup(moq => moq.CheckAddress(It.IsAny<Address>()));
+        [Fact]
+        public async Task ChangeApplicationStatus_ShouldChangeData()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/application/testIdNum1");
+            var requestModel = new Status() {status = "testStatus"};
 
-        //    MainController controller = new(applicationContextReader.Object, 
-        //                                    configurationDataReaderJsonMoq.Object, 
-        //                                    addressValidatorMoq.Object);
+            request.Content = JsonContent.Create(requestModel);
 
-        //    Address address = new Address()
-        //    {
-        //        CityDistrictId = "Holosiiv",
-        //        CityId = "Kyiv",
-        //        StreetId = "Hlushkova"
-        //    };
+            var response = await _client.SendAsync(request);
 
-        //    string res = controller.AddApplication(address);
+            response.EnsureSuccessStatusCode();
+            Assert.Equal("testStatus", _context?.Applications?.FirstOrDefault(p => p.Id == "testIdNum1")?.Status);
+        }
 
-        //    Assert.IsType<string>(res);
-        //    Assert.NotNull(res);
+        [Fact]
+        public async Task AddApplication_AddingExistingAddress_ShouldAddApplicationToDataBase()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/application");
+            var requestModel = new Address()
+            {
+                CityId = "Cherkasy",
+                CityDistrictId = "West",
+                StreetId = "Railway"
+            };
 
-        //    applicationContextReader.Verify(p => p.AddApplication(new Application()), Times.Once);
-        //    addressValidatorMoq.Verify(p => p.CheckOnApplicationAdded(new Address()), Times.Once);
-        //}
+            request.Content = JsonContent.Create(requestModel);
+
+            var response = await _client.SendAsync(request);
+
+            var applicationInDb = _context.Applications.FirstOrDefault(p => p.Id == response.Content.ToString());
+
+            response.EnsureSuccessStatusCode();
+            Assert.NotNull(applicationInDb);
+            Assert.Equal(requestModel.CityDistrictId, applicationInDb.District);
+            Assert.Equal(requestModel.CityId, applicationInDb.City);
+            Assert.Equal(requestModel.StreetId, applicationInDb.Street);
+
+        }
     }
 }
