@@ -9,11 +9,11 @@ namespace Diia.Challenge.Controllers
     public class MainController : ControllerBase
     {
         private readonly ApplicationDataReader _dataReader;
-        private readonly ConfigurationDataReaderJson _configurationReader;
+        private readonly IConfigurationDataReader _configurationReader;
         private AddressValidator _addressValidator;
 
         public MainController(ApplicationDataReader dataReader,
-                                ConfigurationDataReaderJson configurationReader,
+                                IConfigurationDataReader configurationReader,
                                 AddressValidator addressValidator)
         {
             _addressValidator = addressValidator;

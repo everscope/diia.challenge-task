@@ -6,12 +6,12 @@ namespace Diia.Challenge
     public class AddressValidator
     {
         private ApplicationContext _context;
-        private ConfigurationDataReaderJson _configurationReader;
+        private IConfigurationDataReader _configurationReader;
         public Dictionary<string, int> Weights { get; set; }
         public int? Threshold { get; set; } = null;
 
         public AddressValidator(ApplicationContext context,
-            ConfigurationDataReaderJson configurationReader)
+            IConfigurationDataReader configurationReader)
         {
             _configurationReader = configurationReader;
             _context = context;

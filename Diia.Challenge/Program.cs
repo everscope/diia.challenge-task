@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationContext, ApplicationContext>( options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 builder.Services.AddTransient<ApplicationDataReader, ApplicationDataReaderSql>();
-builder.Services.AddTransient<ConfigurationDataReaderJson, ConfigurationDataReaderJson>();
+builder.Services.AddTransient<IConfigurationDataReader, ConfigurationDataReaderJson>();
 builder.Services.AddTransient<AddressValidator, AddressValidator>();
 
 

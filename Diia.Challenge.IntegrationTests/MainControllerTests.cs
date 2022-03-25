@@ -57,8 +57,8 @@ namespace Diia.Challenge.IntegrationTests
             request.Content = JsonContent.Create(requestModel);
 
             var response = await _client.SendAsync(request);
-
-            var applicationInDb = _context.Applications.FirstOrDefault(p => p.Id == response.Content.ToString());
+            string responseData = await response.Content.ReadAsStringAsync();
+            var applicationInDb = _context.Applications.FirstOrDefault(p => p.Id == responseData);
 
             response.EnsureSuccessStatusCode();
             Assert.NotNull(applicationInDb);

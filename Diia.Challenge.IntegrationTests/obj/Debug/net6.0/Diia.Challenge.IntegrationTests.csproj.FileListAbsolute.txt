@@ -444,3 +444,6 @@ F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.IntegrationTests\bin\Deb
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.IntegrationTests\bin\Debug\net6.0\System.IO.Pipelines.dll
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.IntegrationTests\obj\Debug\net6.0\MvcTestingAppManifest.json
 F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.IntegrationTests\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.IntegrationTests\bin\Debug\net6.0\JsonTestData\addresses.json
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.IntegrationTests\bin\Debug\net6.0\JsonTestData\threshhold.json
+F:\Projects\DiiaChallange\Diia.Challenge\Diia.Challenge.IntegrationTests\bin\Debug\net6.0\JsonTestData\weights.json

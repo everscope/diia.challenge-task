@@ -8,6 +8,7 @@ using Diia.Challenge.Lib;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
@@ -53,14 +54,16 @@ namespace Diia.Challenge.IntegrationTests
                                     Street = "Main",
                                     Id = "testIdNum1",
                                     Status = "-1"
-                                }, new Application()
+                                },
+                                new Application()
                                 {
                                     City = "Lviv",
                                     District = "Main",
                                     Street = "Central",
                                     Id = "testIdNum2",
                                     Status = "-1"
-                                }, new Application()
+                                },
+                                new Application()
                                 {
                                     City = "Kyiv",
                                     District = "Holosiiv",
@@ -79,7 +82,8 @@ namespace Diia.Challenge.IntegrationTests
                                     CityId = "Zhytomyr",
                                     StreetId = "Second",
                                     Id = 1
-                                }, new AddressForSql()
+                                },
+                                new AddressForSql()
                                 {
                                     CityDistrictId = "West",
                                     CityId = "Kyiv",
@@ -96,26 +100,22 @@ namespace Diia.Challenge.IntegrationTests
                         {
                             throw;
                         }
+
+                        var configurationDataReader = services.SingleOrDefault(p => p.ServiceType 
+                                                        == typeof(IConfigurationDataReader));
+
+                        if (configurationDataReader != null)
+                        {
+                            services.Remove(configurationDataReader);
+                        }
+
+                        services.AddTransient<IConfigurationDataReader>(s => new ConfigurationDataReaderJson(
+                            "JsonTestData\\threshhold.json",
+                            "JsonTestData\\weights.json",
+                            "JsonTestData\\addresses.json"));
                     }
                 }
 
-                var configurationReader =
-                    services.SingleOrDefault(p => p.ServiceType == typeof(ConfigurationDataReaderJson));
-                if (configurationReader != null)
-                {
-                    services.Remove(configurationReader);   
-                }
-
-                Mock<ConfigurationDataReaderJson> configurationReaderMoq =
-                                        new Mock<ConfigurationDataReaderJson>();
-                configurationReaderMoq.Setup(p => p.CheckAddress(new Address()
-                {
-                    CityId = "Cherkasy",
-                    CityDistrictId = "West",
-                    StreetId = "Railway"
-                })).Returns(true);
-
-                services.AddSingleton<ConfigurationDataReaderJson>(configurationReaderMoq.Object);
             });
         }
     }

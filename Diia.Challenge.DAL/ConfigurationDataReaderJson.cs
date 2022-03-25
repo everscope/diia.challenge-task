@@ -9,17 +9,36 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Diia.Challenge.DAL
 {
-    public class ConfigurationDataReaderJson
+    public class ConfigurationDataReaderJson : IConfigurationDataReader
     {
+
+        private string _treshholdPath = "..\\Diia.Challenge.DAL\\Data\\threshhold.json";
+        private string _weightsPath = "..\\Diia.Challenge.DAL\\Data\\weights.json";
+        private string _addressPath = "..\\Diia.Challenge.DAL\\Data\\addresses.json";
+
+        public ConfigurationDataReaderJson()
+        {
+
+        }
+
+        public ConfigurationDataReaderJson(string treshholdPath,
+                                            string weightsPath,
+                                            string addressPath)
+        {
+            _addressPath = addressPath;
+            _treshholdPath = treshholdPath;
+            _weightsPath = weightsPath;
+        }
+
         public void SetThreshold(Threshold threshold)
         {
             byte [] jsonBytes = JsonSerializer.SerializeToUtf8Bytes<Threshold>(threshold);
-            File.WriteAllBytes("..\\Diia.Challenge.DAL\\Data\\threshhold.json", jsonBytes);
+            File.WriteAllBytes(_treshholdPath, jsonBytes);
         }
 
         public Threshold GetThreshold()
         {
-            byte[] jsonBytes = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\threshhold.json");
+            byte[] jsonBytes = File.ReadAllBytes(_treshholdPath);
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytes);
             return JsonSerializer.Deserialize<Threshold>(readOnlyTemp);
         }
@@ -27,19 +46,19 @@ namespace Diia.Challenge.DAL
         public void SetWeights(Weights weights)
         {
             byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes<Weights>(weights);
-            File.WriteAllBytes("..\\Diia.Challenge.DAL\\Data\\weights.json", jsonBytes);
+            File.WriteAllBytes(_weightsPath, jsonBytes);
         }
 
         public Weights GetWeights()
         {
-            byte[] jsonBytes = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\weights.json");
+            byte[] jsonBytes = File.ReadAllBytes(_weightsPath);
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytes);
             return JsonSerializer.Deserialize<Weights>(readOnlyTemp);
         }
 
         public void AddAddress(Address address)
         {
-            byte[] jsonBytesToRead = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json");
+            byte[] jsonBytesToRead = File.ReadAllBytes(_addressPath);
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
             AddressJson addresses = JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
 
@@ -71,13 +90,13 @@ namespace Diia.Challenge.DAL
             }
 
             byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<AddressJson>(addresses);
-            File.WriteAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json", jsonBytesToWrite);
+            File.WriteAllBytes(_addressPath, jsonBytesToWrite);
 
         }
 
         public AddressJson GetAddresses()
         {
-            byte[] jsonBytesToRead = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json");
+            byte[] jsonBytesToRead = File.ReadAllBytes(_addressPath);
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
             return JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
         }
@@ -103,7 +122,7 @@ namespace Diia.Challenge.DAL
 
         public void RemoveAddresses(List<AddressForSql> addressesToDelete)
         {
-            byte[] jsonBytesToRead = File.ReadAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json");
+            byte[] jsonBytesToRead = File.ReadAllBytes(_addressPath);
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
             AddressJson addresses = JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
 
@@ -133,7 +152,7 @@ namespace Diia.Challenge.DAL
             }
 
             byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<AddressJson>(addresses);
-            File.WriteAllBytes("..\\Diia.Challenge.DAL\\Data\\addresses.json", jsonBytesToWrite);
+            File.WriteAllBytes(_addressPath, jsonBytesToWrite);
         }
     }
 }
