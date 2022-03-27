@@ -1,0 +1,96 @@
+[33mcommit b9fcb46419a6abb401ffc68e507d88a3cb2b28dd[m[33m ([m[1;36mHEAD -> [m[1;32mIntegrationTests[m[33m)[m
+Author: everscope <im2423@gmail.com>
+Date:   Wed Mar 23 18:26:28 2022 +0100
+
+    addet status change test
+
+[33mcommit b53b3827903825fc05f6aa4028c7371330177e6b[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: everscope <im2423@gmail.com>
+Date:   Sat Mar 19 16:40:42 2022 +0200
+
+    added integration test project
+
+[33mcommit 17daef06fc41b8a75ba81ecb64dcccd5ccadbd8b[m
+Author: everscope <im2423@gmail.com>
+Date:   Mon Mar 7 11:43:52 2022 +0200
+
+    fixed minor bag with adding address to json file
+
+[33mcommit 83ac631e329678f35014f5c86443d26327c4eab2[m
+Merge: 07fcf95 9a7c50a
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 23:32:27 2022 +0200
+
+    Merge branch 'master' of https://github.com/everscope/diia.challenge-task
+
+[33mcommit 07fcf95df3d88d248b340862b0aa1a63bb63bf32[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 23:32:12 2022 +0200
+
+    final minor changes
+
+[33mcommit 9a7c50ae6f9a7ba03b1eeaecc938dd271d9918f2[m
+Author: Agent Double P <79381961+everscope@users.noreply.github.com>
+Date:   Sun Mar 6 23:20:28 2022 +0200
+
+    Update README.md
+
+[33mcommit 0688a7287987d4138ccb9d1cdc271e84b8c2004d[m
+Author: Agent Double P <79381961+everscope@users.noreply.github.com>
+Date:   Sun Mar 6 23:16:39 2022 +0200
+
+    Create README.md
+
+[33mcommit 79e52f61e42455c196b86455be3dcb0c38abf578[m
+Author: Agent Double P <79381961+everscope@users.noreply.github.com>
+Date:   Sun Mar 6 23:13:49 2022 +0200
+
+    Delete .dockerignore
+
+[33mcommit 172031f2096a530f5cb351c10f7a8b1053fbbc93[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 23:13:16 2022 +0200
+
+    database recreated
+
+[33mcommit 9f8a9d4e6b6173c6ee758310f70d818591b28fc2[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 23:10:09 2022 +0200
+
+    finished all api
+
+[33mcommit 142e56c123ed4c02ceff2f80661ad077f839c69c[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 21:21:23 2022 +0200
+
+    added adding new addresses
+
+[33mcommit 9eaab37b271fc0b38b6ea7c01af74406d2054534[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 19:40:44 2022 +0200
+
+    added address reading and writing to json
+
+[33mcommit 2817c7fce2ec5afad0523acfcfd072a6a20ff395[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 19:13:13 2022 +0200
+
+    added weiths and threshold api
+
+[33mcommit 8d375f8f8c6d58c7ff0eb8fb6596cfbf1e87439c[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 17:24:56 2022 +0200
+
+    added api for status change
+
+[33mcommit 86688cfa7a9a289d83e04fcf46b6d50843be8b38[m
+Author: everscope <im2423@gmail.com>
+Date:   Sun Mar 6 15:57:21 2022 +0200
+
+    splited for 3 parts. Finished adding to database
+
+[33mcommit 400f3841e3bd70a2a90aa9b4d1022ff6641fa474[m
+Author: everscope <im2423@gmail.com>
+Date:   Thu Feb 24 00:08:59 2022 +0200
+
+    init commit
