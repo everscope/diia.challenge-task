@@ -62,13 +62,17 @@ namespace Diia.Challenge.DAL
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
             AddressJson addresses = JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
 
+            if (addresses.CityDistricts == null) addresses.CityDistricts = new List<DistrictJson>();
+            if (addresses.Cities == null) addresses.Cities = new List<CityJson>();
+            if (addresses.Streets == null) addresses.Streets = new List<StreetJson>();
+
             if (!addresses.Cities.Any(p => p.id == address.CityId))
             {
                 addresses.Cities.Add(new CityJson() {id = address.CityId} );
             }
             
             if(!addresses.CityDistricts.Any(p => p.id == address.CityDistrictId 
-                                        && p.parentId == address.CityId))
+                                                 && p.parentId == address.CityId))
             {
                 addresses.CityDistricts.Add(new DistrictJson()
                 {
@@ -126,25 +130,25 @@ namespace Diia.Challenge.DAL
             var readOnlyTemp = new ReadOnlySpan<byte>(jsonBytesToRead);
             AddressJson addresses = JsonSerializer.Deserialize<AddressJson>(readOnlyTemp);
 
-            foreach (AddressForSql address in addressesToDelete)
+            foreach (AddressForSql address in addressesToDelete.ToList())
             {
                 var StreetToDelete = addresses.Streets.Where(p => p.id == address.StreetId
                                                   && p.parentId == address.CityId
                                                   && p.cityDistrictId == address.CityDistrictId);
-                foreach (StreetJson street in StreetToDelete)
+                foreach (StreetJson street in StreetToDelete.ToList())
                 {
                     addresses.Streets.Remove(street);
                 }
 
                 var districtsToDelete = addresses.CityDistricts.Where(p => p.id == address.CityDistrictId
                                                 && p.parentId == address.CityId);
-                foreach (DistrictJson district in districtsToDelete)
+                foreach (DistrictJson district in districtsToDelete.ToList())
                 {
                     addresses.CityDistricts.Remove(district);
                 }
 
                 var citiesToDelete = addresses.Cities.Where(p => p.id == address.CityId).ToList();
-                foreach (CityJson city in citiesToDelete)
+                foreach (CityJson city in citiesToDelete.ToList())
                 {
                     addresses.Cities.Remove(city);
                 }

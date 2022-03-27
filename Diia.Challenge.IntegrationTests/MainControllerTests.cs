@@ -1,22 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Net.Http.Json;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
-using Castle.Core.Logging;
-using Diia.Challenge.Controllers;
 using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Microsoft.Extensions.Logging;
 using Xunit;
-using Moq;
-using Xunit.Extensions;
-using System.Reflection;
+
 
 namespace Diia.Challenge.IntegrationTests
 {
@@ -32,20 +20,6 @@ namespace Diia.Challenge.IntegrationTests
                 new DbContextOptionsBuilder<ApplicationContext>();
             optionsBuilder.UseInMemoryDatabase("ApplicationContextForTesting");
             _context = new ApplicationContext(optionsBuilder.Options);
-        }
-
-        [Fact]
-        public async Task ChangeApplicationStatus_ShouldChangeData()
-        {
-            var request = new HttpRequestMessage(HttpMethod.Post, "api/application/testIdNum1");
-            var requestModel = new Status() {status = "testStatus"};
-
-            request.Content = JsonContent.Create(requestModel);
-
-            var response = await _client.SendAsync(request);
-
-            response.EnsureSuccessStatusCode();
-            Assert.Equal("testStatus", _context?.Applications?.FirstOrDefault(p => p.Id == "testIdNum1")?.Status);
         }
 
         [Fact]
@@ -70,6 +44,73 @@ namespace Diia.Challenge.IntegrationTests
             Assert.Equal(requestModel.CityDistrictId, applicationInDb.District);
             Assert.Equal(requestModel.CityId, applicationInDb.City);
             Assert.Equal(requestModel.StreetId, applicationInDb.Street);
+        }
+
+        [Fact]
+        public async Task AddApplication_AddingNotExistingApplications_ShouldSaveThemToJson()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/threshold");
+            request.Content = JsonContent.Create(new Threshold() {value = 5});
+            var responce = await _client.SendAsync(request);
+            responce.EnsureSuccessStatusCode();
+
+            request = new HttpRequestMessage(HttpMethod.Post, "api/weights");
+            request.Content = JsonContent.Create(new Weights()
+            {
+                weigths = new Dictionary<string, int>()
+                {
+                    {"success", 2},
+                    {"good", 1}
+                }
+            });
+            responce = await _client.SendAsync(request);
+            responce.EnsureSuccessStatusCode();
+
+            request = new HttpRequestMessage(HttpMethod.Post, "api/application");
+            request.Content = JsonContent.Create(new Address()
+            {
+                CityId = "Odessa",
+                CityDistrictId = "Sea",
+                StreetId = "First"
+            });
+            responce = await _client.SendAsync(request);
+            responce.EnsureSuccessStatusCode();
+
+            string id = await responce.Content.ReadAsStringAsync();
+            request = new HttpRequestMessage(HttpMethod.Post, $"api/application/{id}");
+            request.Content = JsonContent.Create(new Status() { status = "Success" });
+            responce = await _client.SendAsync(request);
+            responce.EnsureSuccessStatusCode();
+
+            request = new HttpRequestMessage(HttpMethod.Post, "api/application");
+            request.Content = JsonContent.Create(new Address()
+            {
+                CityId = "Odessa",
+                CityDistrictId = "Sea",
+                StreetId = "First"
+            });
+            responce = await _client.SendAsync(request);
+            responce.EnsureSuccessStatusCode();
+
+            var addressesJson = ReadDataFromJson<AddressJson>("JsonTestData\\addresses.json");
+            var address = addressesJson.Streets.FirstOrDefault(p => p.parentId == "Odessa"
+                                                        && p.cityDistrictId == "Sea"
+                                                        && p.id == "First");
+            Assert.NotNull(address);
+        }
+        
+        [Fact]
+        public async Task ChangeApplicationStatus_ShouldChangeData()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/application/testIdNum1");
+            var requestModel = new Status() { status = "testStatus" };
+
+            request.Content = JsonContent.Create(requestModel);
+
+            var response = await _client.SendAsync(request);
+
+            response.EnsureSuccessStatusCode();
+            Assert.Equal("testStatus", _context?.Applications?.FirstOrDefault(p => p.Id == "testIdNum1")?.Status);
         }
 
         [Theory]
@@ -141,7 +182,7 @@ namespace Diia.Challenge.IntegrationTests
                         "in process", 7
                     },
                     {
-                        "requiers test", 4
+                        "check up required", 4
                     },
                     {
                         "fake address", 0

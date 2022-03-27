@@ -1,1 +1,1 @@
-{"Cities":[{"id":"string"},{"id":"Cherkasy"}],"CityDistricts":[{"id":"string","parentId":"cityId"},{"id":"West","parentId":"Cherkasy"}],"Streets":[{"id":"string","parentId":"cityId","cityDistrictId":"string"},{"id":"Railway","parentId":"Cherkasy","cityDistrictId":"West"}]}
+{"Cities":[{"id":"Cherkasy"}],"CityDistricts":[{"id":"West","parentId":"Cherkasy"}],"Streets":[{"id":"Railway","parentId":"Cherkasy","cityDistrictId":"West"}]}

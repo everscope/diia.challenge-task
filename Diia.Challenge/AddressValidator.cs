@@ -19,7 +19,7 @@ namespace Diia.Challenge
 
         public void UnvalidateOnConfigurationChange()
         {
-            _configurationReader.RemoveAddresses(_context.Addresses.ToList());
+            _configurationReader.RemoveAddresses(_context.Addresses?.ToList());
         }
 
         public bool CheckOnApplicationAdded(Address address)

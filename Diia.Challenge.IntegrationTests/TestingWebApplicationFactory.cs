@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
@@ -24,7 +25,8 @@ namespace Diia.Challenge.IntegrationTests
             builder.ConfigureServices(services =>
             {
                 var dbContext = services.SingleOrDefault(p => p.ServiceType
-                                                    == typeof(DbContextOptions<ApplicationContext>));
+                                                              == typeof(DbContextOptions<ApplicationContext>));
+                ClearUpJson();
 
                 if (dbContext != null)
                 {
@@ -35,6 +37,18 @@ namespace Diia.Challenge.IntegrationTests
                 {
                     options.UseInMemoryDatabase("ApplicationContextForTesting");
                 });
+
+                var configurationDataReader = services.SingleOrDefault(p => p.ServiceType
+                                                                            == typeof(IConfigurationDataReader));
+
+                if (configurationDataReader != null)
+                {
+                    services.Remove(configurationDataReader);
+                }
+                services.AddTransient<IConfigurationDataReader>(s => new ConfigurationDataReaderJson(
+                    "JsonTestData\\threshhold.json",
+                    "JsonTestData\\weights.json",
+                    "JsonTestData\\addresses.json"));
 
                 var serviceProvider = services.BuildServiceProvider();
                 using (var scope = serviceProvider.CreateScope())
@@ -70,7 +84,31 @@ namespace Diia.Challenge.IntegrationTests
                                     Street = "Main",
                                     Id = "testIdNum3",
                                     Status = "-1"
-                                }
+                                },
+                                new Application()
+                                {
+                                    City = "Odessa",
+                                    District = "Sea",
+                                    Street = "First",
+                                    Id = "overcomingThreshhold1",
+                                    Status = "success"
+                                },
+                                new Application()
+                                {
+                                    City = "Odessa",
+                                    District = "Sea",
+                                    Street = "First",
+                                    Id = "overcomingThreshhold2",
+                                    Status = "success"
+                                },
+                                new Application()
+                                {
+                                    City = "Odessa",
+                                    District = "Sea",
+                                    Street = "First",
+                                    Id = "overcomingThreshhold3",
+                                    Status = "success"
+                                },
 
                             });
 
@@ -100,23 +138,56 @@ namespace Diia.Challenge.IntegrationTests
                         {
                             throw;
                         }
+                    }
 
-                        var configurationDataReader = services.SingleOrDefault(p => p.ServiceType 
-                                                        == typeof(IConfigurationDataReader));
-
-                        if (configurationDataReader != null)
+                    var jsonReader = scope.ServiceProvider.GetRequiredService<IConfigurationDataReader>();
+                    try
+                    {
+                        ClearUpJson();
+                        jsonReader.AddAddress(new Address()
                         {
-                            services.Remove(configurationDataReader);
-                        }
+                            CityId = "Cherkasy",
+                            CityDistrictId = "West",
+                            StreetId = "Railway"
+                        });
+                        jsonReader.AddAddress(new Address()
+                        {
+                            CityDistrictId = "East",
+                            CityId = "Zhytomyr",
+                            StreetId = "Second"
+                        });
+                        jsonReader.AddAddress(new Address()
+                        {
+                            CityDistrictId = "West",
+                            CityId = "Kyiv",
+                            StreetId = "First"
+                        });
 
-                        services.AddTransient<IConfigurationDataReader>(s => new ConfigurationDataReaderJson(
-                            "JsonTestData\\threshhold.json",
-                            "JsonTestData\\weights.json",
-                            "JsonTestData\\addresses.json"));
+                        jsonReader.SetThreshold(new Threshold() {value = 10});
+                        jsonReader.SetWeights(new Weights()
+                        {
+                            weigths = new Dictionary<string, int>() { { "testWeight", 1 } }
+                        });
+                    }
+                    catch
+                    {
+                        throw;
                     }
                 }
 
             });
+        }
+
+        private void ClearUpJson()
+        {
+            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes<AddressJson>(new AddressJson());
+            File.WriteAllBytes("JsonTestData\\addresses.json", jsonBytes);
+
+            jsonBytes = JsonSerializer.SerializeToUtf8Bytes<Threshold>(new Threshold());
+            File.WriteAllBytes("JsonTestData\\threshhold.json", jsonBytes);
+
+            jsonBytes = JsonSerializer.SerializeToUtf8Bytes<Weights>(new Weights());
+            File.WriteAllBytes("JsonTestData\\weights.json", jsonBytes);
         }
     }
 }
