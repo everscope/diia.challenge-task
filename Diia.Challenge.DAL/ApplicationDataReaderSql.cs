@@ -1,6 +1,4 @@
-﻿//using Diia.Challenge.DatabaseContext;
-
-using Diia.Challenge.DAL;
+﻿using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
 using Diia.Challenge;
 
@@ -8,8 +6,6 @@ namespace Diia.Challenge
 {
     public class ApplicationDataReaderSql : ApplicationDataReader
     {
-        //private ApplicationContext _context;
-
         public ApplicationDataReaderSql(ApplicationContext context)
         {
             _context = context;
@@ -18,6 +14,24 @@ namespace Diia.Challenge
         public override void AddApplication(Application application)
         {
             _context.Applications.Add(application);
+            _context.SaveChanges();
+        }
+
+        public override List<AddressForSql> GetAllAddresses()
+        {
+            return _context.Addresses.ToList();
+        }
+
+        public override List<Application> GetApplicationWithAddress(Address address)
+        {
+            return _context.Applications.Where(p => p.City == address.CityId
+                && p.District == address.CityDistrictId
+                && p.Street == address.StreetId).ToList();
+        }
+
+        public override void AddAdress(AddressForSql adress)
+        {
+            _context.Addresses.Add(adress);
             _context.SaveChanges();
         }
 

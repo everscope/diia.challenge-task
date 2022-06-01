@@ -17,7 +17,7 @@ namespace Diia.Challenge.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Address>().HasNoKey();
+
         }
 
     }

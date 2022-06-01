@@ -1,4 +1,5 @@
-﻿using Diia.Challenge.DAL;
+﻿using AutoMapper;
+using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,24 +12,23 @@ namespace Diia.Challenge.Controllers
         private readonly ApplicationDataReader _dataReader;
         private readonly IConfigurationDataReader _configurationReader;
         private AddressValidator _addressValidator;
+        private IMapper _mapper;
 
         public MainController(ApplicationDataReader dataReader,
-                                IConfigurationDataReader configurationReader,
-                                AddressValidator addressValidator)
+            IConfigurationDataReader configurationReader,
+            AddressValidator addressValidator,
+            IMapper mapper)
         {
             _addressValidator = addressValidator;
             _configurationReader = configurationReader;
             _dataReader = dataReader;
+            _mapper = mapper;
         }
 
         [HttpPost("application")]
         public string AddApplication(Address address)
         {
-            Application application = new Application();
-
-            application.City = address.CityId;
-            application.District = address.CityDistrictId;
-            application.Street = address.StreetId;
+            Application application = _mapper.Map<Application>(address);
             application.Status = "-1";
             application.Id = _dataReader.GenerateId();
 

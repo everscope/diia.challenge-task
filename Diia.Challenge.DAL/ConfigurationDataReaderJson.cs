@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using Diia.Challenge.Lib;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Diia.Challenge.DAL
 {
@@ -22,8 +16,8 @@ namespace Diia.Challenge.DAL
         }
 
         public ConfigurationDataReaderJson(string treshholdPath,
-                                            string weightsPath,
-                                            string addressPath)
+            string weightsPath,
+            string addressPath)
         {
             _addressPath = addressPath;
             _treshholdPath = treshholdPath;
@@ -72,7 +66,7 @@ namespace Diia.Challenge.DAL
             }
             
             if(!addresses.CityDistricts.Any(p => p.id == address.CityDistrictId 
-                                                 && p.parentId == address.CityId))
+                && p.parentId == address.CityId))
             {
                 addresses.CityDistricts.Add(new DistrictJson()
                 {
@@ -82,8 +76,8 @@ namespace Diia.Challenge.DAL
             }
 
             if (!addresses.Streets.Any(p => p.id == address.StreetId
-                                            && p.parentId == address.CityId
-                                            && p.cityDistrictId == address.CityDistrictId))
+                && p.parentId == address.CityId
+                && p.cityDistrictId == address.CityDistrictId))
             {
                 addresses.Streets.Add(new StreetJson()
                 {
@@ -95,7 +89,6 @@ namespace Diia.Challenge.DAL
 
             byte[] jsonBytesToWrite = JsonSerializer.SerializeToUtf8Bytes<AddressJson>(addresses);
             File.WriteAllBytes(_addressPath, jsonBytesToWrite);
-
         }
 
         public AddressJson GetAddresses()
@@ -106,14 +99,20 @@ namespace Diia.Challenge.DAL
         }
 
         public bool CheckAddress(Address address)
-        { 
-            AddressJson addresses = GetAddresses();
-
-            bool result;
-
+        {
+            AddressJson? addresses = null;
+            try
+            {
+                addresses = GetAddresses();
+            }
+            catch
+            {
+                return true;
+            }
+            
             if (addresses != null && addresses.Streets.Any(p => p.id == address.StreetId
-                                                && p.parentId == address.CityId
-                                                && p.cityDistrictId == address.CityDistrictId))
+                && p.parentId == address.CityId
+                && p.cityDistrictId == address.CityDistrictId))
             {
                 return true;
             }
@@ -133,15 +132,15 @@ namespace Diia.Challenge.DAL
             foreach (AddressForSql address in addressesToDelete.ToList())
             {
                 var StreetToDelete = addresses.Streets.Where(p => p.id == address.StreetId
-                                                  && p.parentId == address.CityId
-                                                  && p.cityDistrictId == address.CityDistrictId);
+                    && p.parentId == address.CityId
+                    && p.cityDistrictId == address.CityDistrictId);
                 foreach (StreetJson street in StreetToDelete.ToList())
                 {
                     addresses.Streets.Remove(street);
                 }
 
                 var districtsToDelete = addresses.CityDistricts.Where(p => p.id == address.CityDistrictId
-                                                && p.parentId == address.CityId);
+                    && p.parentId == address.CityId);
                 foreach (DistrictJson district in districtsToDelete.ToList())
                 {
                     addresses.CityDistricts.Remove(district);

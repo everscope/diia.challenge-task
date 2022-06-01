@@ -11,13 +11,11 @@ namespace Diia.Challenge
 
         protected ApplicationContext _context;
 
-        //public ApplicationDataReader(ApplicationContext context)
-        //{
-        //    _context = context;
-        //}
-
         public abstract void AddApplication(Application application);
         public abstract void UpdateApplicationStatus(string Id, string status);
+        public abstract List<Application> GetApplicationWithAddress(Address address);
+        public abstract void AddAdress(AddressForSql adress);
+        public abstract List<AddressForSql> GetAllAddresses();
 
         public string GenerateId()
         {
@@ -38,15 +36,5 @@ namespace Diia.Challenge
                 return result;
             }
         }
-
-        //public Application CreateApplication(Address address)
-        //{
-        //    Application application = new Application();
-        //    application.City = address.CityId;
-        //    application.District = address.CityDistrictId;
-        //    application.Street = address.StreetId;
-        //    application.Status = "-1";
-        //    application.Id = GenerateId();
-        //}
     }
 }

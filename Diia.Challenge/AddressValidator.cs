@@ -1,25 +1,29 @@
 ﻿using Diia.Challenge.DAL;
 using Diia.Challenge.Lib;
+using AutoMapper;
 
 namespace Diia.Challenge
 {
     public class AddressValidator
     {
-        private ApplicationContext _context;
+        private ApplicationDataReader _dataReader;
         private IConfigurationDataReader _configurationReader;
+        private IMapper _mapper;
         public Dictionary<string, int> Weights { get; set; }
         public int? Threshold { get; set; } = null;
 
-        public AddressValidator(ApplicationContext context,
-            IConfigurationDataReader configurationReader)
+        public AddressValidator(ApplicationDataReader dataReader,
+            IConfigurationDataReader configurationReader,
+            IMapper mapper)
         {
             _configurationReader = configurationReader;
-            _context = context;
+            _dataReader = dataReader;
+            _mapper = mapper;
         }
 
         public void UnvalidateOnConfigurationChange()
         {
-            _configurationReader.RemoveAddresses(_context.Addresses?.ToList());
+            _configurationReader.RemoveAddresses(_dataReader.GetAllAddresses()); ;
         }
 
         public bool CheckOnApplicationAdded(Address address)
@@ -35,9 +39,7 @@ namespace Diia.Challenge
                 Weights = _configurationReader.GetWeights().weigths;
             }
 
-            var previousApplications = _context.Applications.Where(p => p.City == address.CityId
-                                                            && p.District == address.CityDistrictId
-                                                            && p.Street == address.StreetId);
+            var previousApplications = _dataReader.GetApplicationWithAddress(address);
 
             int x = 1;
             foreach (Application application in previousApplications)
@@ -49,14 +51,8 @@ namespace Diia.Challenge
             }
 
             if (x > Threshold)
-            {
-                _context.Addresses.Add(new AddressForSql()
-                {
-                    CityDistrictId = address.CityDistrictId,
-                    CityId = address.CityId,
-                    StreetId = address.StreetId
-                });
-                _context.SaveChanges();
+            { 
+                _dataReader.AddAdress(_mapper.Map<AddressForSql>(address));
                 return true;
             }
             else

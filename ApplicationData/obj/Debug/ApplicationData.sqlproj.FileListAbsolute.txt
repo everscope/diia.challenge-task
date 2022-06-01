@@ -1,6 +1,0 @@
-F:\Projects\DiiaChallange\Diia.Challenge\ApplicationData\bin\Debug\ApplicationData.dacpac
-F:\Projects\DiiaChallange\Diia.Challenge\ApplicationData\bin\Debug\ApplicationData.dll
-F:\Projects\DiiaChallange\Diia.Challenge\ApplicationData\bin\Debug\ApplicationData.pdb
-F:\Projects\DiiaChallange\Diia.Challenge\ApplicationData\obj\Debug\ApplicationData.sqlproj.AssemblyReference.cache
-F:\Projects\DiiaChallange\Diia.Challenge\ApplicationData\obj\Debug\ApplicationData.dll
-F:\Projects\DiiaChallange\Diia.Challenge\ApplicationData\obj\Debug\ApplicationData.pdb
