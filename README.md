@@ -21,9 +21,9 @@ After the project has been cloned, print this:
 In the console, among logs, you will be able to find this text with the address:
 
     Microsoft.Hosting.Lifetime[14]
-    Now listening on: https://localhost:7174
+    Now listening on: https://localhost:7175
     info: Microsoft.Hosting.Lifetime[14]
-    Now listening on: http://localhost:5174
+    Now listening on: http://localhost:5175
     info: Microsoft.Hosting.Lifetime[0]
 
 Open your browser and go to the first address + "/swagger" (in this case `localhost:7079/swagger`) or second address + "/swagger" (`localhost:5079/swagger`). (notice, that in your case your ports can be different).
