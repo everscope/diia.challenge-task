@@ -15,7 +15,7 @@ In console, print:
 
 After the project has been cloned, print this:
 
-    cd diia.challenge-task/Diia.Challange
+    cd diia.challenge-task/Diia.Challenge
     dotnet run
 
 In the console, among logs, you will be able to find this text with the address:
